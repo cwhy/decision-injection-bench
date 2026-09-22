@@ -1,0 +1,100 @@
+{
+  "recorded_utc": "2026-09-22T07:22:36.688171+00:00",
+  "leaderboard": {
+    "url": "https://benchmarkheaven.com/jev-models",
+    "benchmark": "JevBench",
+    "revision": "v1.3.0",
+    "snapshot_sha256": "20fce8e6e4f078d4a3d0105abb5739bacabbb6d4112a1f8be7d2db76f44cdb78",
+    "selected_rows": [
+      {
+        "key": "jev-1.13.0",
+        "rank": 1,
+        "display": "Jev 1.13.0 (TypeSafe AI)",
+        "jevbench_score": 74.40448849535433,
+        "repo": "https://docs.typesafe.ai",
+        "underlying": "closed",
+        "endpoint_condition": "production API (api.typesafe.ai)"
+      },
+      {
+        "key": "semif-qwen3.5-4b",
+        "rank": 2,
+        "display": "SemIf, formerly OpenJev (Qwen3.5-4B, TheoLeeCJ)",
+        "jevbench_score": 73.08747495585776,
+        "repo": "https://github.com/TheoLeeCJ/openjev",
+        "underlying": "Qwen/Qwen3.5-4B (frozen, BF16)",
+        "endpoint_condition": "our RunPod GPU (RTX PRO 4500 Blackwell 32 GB (EU-RO-1)), reached over the internet"
+      },
+      {
+        "key": "djev",
+        "rank": 3,
+        "display": "djev (Maisa, diffusion-gemma)",
+        "jevbench_score": 73.02927314568292,
+        "repo": "https://github.com/Davipar/djev-dev",
+        "underlying": "inference method on google/diffusiongemma-26B-A4B-it (one structured denoising read), not a separately trained model",
+        "endpoint_condition": "production API (api.djev.dev, free preview)"
+      },
+      {
+        "key": "winnow-12b",
+        "rank": 4,
+        "display": "Winnow-12B Q8",
+        "jevbench_score": 71.21883011371422,
+        "repo": "https://huggingface.co/EldanRing/Winnow-12B",
+        "underlying": "google/gemma-4-12B-it LoRA fine-tune, merged and exported as Q8_0 GGUF",
+        "endpoint_condition": "our GPU (lium.io RTX 4090 24 GB), reached over the internet from Germany; serial, one request at a time"
+      }
+    ]
+  },
+  "jev": {
+    "requested": "jev-1.13.0",
+    "sdk": "0.6.0"
+  },
+  "semif": {
+    "code_repo": "https://github.com/TheoLeeCJ/SemIf",
+    "code_commit": "1f2dea3e25379f9dfc98cb83c324f00ab5deda37",
+    "model": "Qwen/Qwen3.5-4B",
+    "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "backend": "author PyTorch CUDA BF16 direct scorer",
+    "max_tokens": 8192,
+    "difference_from_leaderboard": "RTX 4090 instead of RTX PRO 4500 Blackwell; pinned source and BF16 weights; not a latency reproduction"
+  },
+  "winnow": {
+    "model_repo": "EldanRing/Winnow-12B",
+    "model_revision": "b6ac22b0d51b69b18200acacb3fbdd98073fffe8",
+    "file": "gguf/Winnow-12B-Q8_0.gguf",
+    "sha256": "b710efc4c0d048ee61eed92c5fef5ce323a4d17e7c51f9f0533cc72ae50818ea",
+    "code_repo": "https://github.com/EldanRing/winnow-inference",
+    "code_commit": "6c2b3c04e248a319f2cb43832628eba03e55fe38",
+    "backend": "official llama.cpp CUDA server",
+    "context": 8192,
+    "decision_parallel": 1,
+    "cache": "q8_0",
+    "head": "selected",
+    "reuse_prefix": {
+      "development": false,
+      "refinement": false,
+      "heldout": true
+    },
+    "temperature": 1.0,
+    "difference_from_leaderboard": "RTX 4090 with Q8_0 weights and Q8_0 KV; pinned runtime and context configuration recorded; not a latency reproduction"
+  },
+  "djev": {
+    "status": "not tested",
+    "reason": "invite-only registration; user has no invitation and requested next model"
+  },
+  "compute": {
+    "location": "user-provided remote Linux server",
+    "gpus": "2 \u00d7 NVIDIA RTX 4090, 24 GB each",
+    "semif_gpu": 0,
+    "winnow_gpu": 1,
+    "preliminary_mac_runs": "Excluded from canonical results; retained in scripts/jev_prompt_manipulation/local-exploration. Laptop inference stopped at user request.",
+    "software": {
+      "os": "Ubuntu 24.04",
+      "python": "3.12.3",
+      "driver": "590.48.01",
+      "CUDA_compiler": "13.0.88",
+      "torch": "2.10.0",
+      "transformers": "5.17.0",
+      "cmake": "4.4.3"
+    }
+  }
+}

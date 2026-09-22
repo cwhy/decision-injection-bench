@@ -1,0 +1,131 @@
+{
+  "models": {
+    "jev": {
+      "basic": {
+        "flips": 15,
+        "eligible": 56,
+        "affected_items": 7,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "hardened": {
+        "flips": 8,
+        "eligible": 56,
+        "affected_items": 4,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "strict": {
+        "flips": 0,
+        "eligible": 56,
+        "affected_items": 0,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      }
+    },
+    "semif": {
+      "basic": {
+        "flips": 40,
+        "eligible": 56,
+        "affected_items": 8,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "hardened": {
+        "flips": 32,
+        "eligible": 56,
+        "affected_items": 8,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "strict": {
+        "flips": 32,
+        "eligible": 56,
+        "affected_items": 8,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      }
+    },
+    "winnow": {
+      "basic": {
+        "flips": 48,
+        "eligible": 56,
+        "affected_items": 8,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "hardened": {
+        "flips": 8,
+        "eligible": 56,
+        "affected_items": 4,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      },
+      "strict": {
+        "flips": 8,
+        "eligible": 56,
+        "affected_items": 4,
+        "clean_errors": 0,
+        "neutral_errors": 0
+      }
+    }
+  },
+  "total_calls": 1332,
+  "heldout_per_model": 264,
+  "files": [
+    {
+      "file": "jev-development.jsonl",
+      "label": "Jev 1.13.0 / development",
+      "n": 132,
+      "sha256": "45e85312ac3066d2cebe28160ee5189821f8b2f7a3efa1dd95e2aa5dd439bbe8"
+    },
+    {
+      "file": "jev-refinement.jsonl",
+      "label": "Jev 1.13.0 / refinement",
+      "n": 48,
+      "sha256": "6292ce26dec9cd7b893c1bbb04d314267e1ddd603b54e216dfb94d99a9bab44c"
+    },
+    {
+      "file": "jev-heldout.jsonl",
+      "label": "Jev 1.13.0 / heldout",
+      "n": 264,
+      "sha256": "164fc47b060865e3457d09bfefedbab4b0a7c26c19ded81ae61bdd72a5afd0b7"
+    },
+    {
+      "file": "semif-development.jsonl",
+      "label": "SemIf \u00b7 Qwen3.5-4B / development",
+      "n": 132,
+      "sha256": "0095d6219a77816110588a8535dc564d614e0a925dc19748f9346f8f72a6fecd"
+    },
+    {
+      "file": "semif-refinement.jsonl",
+      "label": "SemIf \u00b7 Qwen3.5-4B / refinement",
+      "n": 48,
+      "sha256": "155e6d5ec95bd7409378b24d3bd2643cebc504d5538b0cc855e86c594f70f2c2"
+    },
+    {
+      "file": "semif-heldout.jsonl",
+      "label": "SemIf \u00b7 Qwen3.5-4B / heldout",
+      "n": 264,
+      "sha256": "4a8be5d66a993acc28a02e25a1bb5fbc950555b1a77635d8a43abdf7a02642b6"
+    },
+    {
+      "file": "winnow-development.jsonl",
+      "label": "Winnow-12B Q8 / development",
+      "n": 132,
+      "sha256": "677bb4d4666ce60f527a8375032a1f8f95a39dd0dd08b295799c31b555bb159a"
+    },
+    {
+      "file": "winnow-refinement.jsonl",
+      "label": "Winnow-12B Q8 / refinement",
+      "n": 48,
+      "sha256": "aac1fe4377415aa13adab164d212538910bd817485ebb562490f41ac73d73b56"
+    },
+    {
+      "file": "winnow-heldout.jsonl",
+      "label": "Winnow-12B Q8 / heldout",
+      "n": 264,
+      "sha256": "bf00d6bea63c567a973ca0875db4e5b546f2add24a6f24ce5012c5cdf8cfc9fa"
+    }
+  ]
+}

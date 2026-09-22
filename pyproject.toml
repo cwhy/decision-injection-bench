@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decision-injection-bench"
+version = "0.1.0"
+description = "Paired prompt-injection evaluation for structured decision models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Chen Yu"}]
+dependencies = []
+
+[project.optional-dependencies]
+jev = ["typesafe-sdk==0.6.0"]
+
+[project.scripts]
+decision-injection-bench = "decision_injection_bench.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+decision_injection_bench = ["fixtures/*.json"]
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
