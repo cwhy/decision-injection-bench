@@ -1,4 +1,6 @@
-# Methodology and limits
+# Simple v1 methodology and limits
+
+For the new track, see [Comprehensive v2](comprehensive.md). The historical evidence described here is unchanged.
 
 ## Threat model
 

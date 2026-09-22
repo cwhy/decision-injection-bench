@@ -165,8 +165,22 @@ def score(rows):
 
 
 def main():
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "comprehensive":
+        from .comprehensive.cli import main as comprehensive_main
+
+        return comprehensive_main(sys.argv[2:])
+    if len(sys.argv) > 1 and sys.argv[1] == "simple":
+        del sys.argv[1]
     parser = argparse.ArgumentParser(prog="decision-injection-bench")
+    parser.add_argument("--version", action="version", version="%(prog)s 0.2.0")
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("simple", help="Original v1 suite (run/export/score)")
+    commands.add_parser(
+        "comprehensive",
+        help="v2 planning, adaptive search, frozen transfer, and scoring",
+    )
     run = commands.add_parser(
         "run", help="Make live model calls (API usage or GPU compute)"
     )

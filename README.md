@@ -2,9 +2,28 @@
 
 A public prompt-injection and jailbreak test suite for **Jev-like structured decision systems**. Can attacker-controlled content change a correct classification while the answer still satisfies its schema?
 
-The first suite covers adult-content moderation and spam detection, with `ALLOW`/`BLOCK` decisions. It includes targeted attack development, clean and neutral controls, three trusted policy conditions, frozen transfer tests, model adapters, and **1,332 recorded calls** from Jev 1.13.0, SemIf/Qwen3.5-4B, and Winnow-12B Q8.
+The **simple v1** suite covers adult-content moderation and spam detection, with `ALLOW`/`BLOCK` decisions. It includes targeted attack development, clean and neutral controls, three trusted policy conditions, frozen transfer tests, model adapters, and **1,332 recorded calls** from Jev 1.13.0, SemIf/Qwen3.5-4B, and Winnow-12B Q8.
 
 Independent research; not affiliated with TypeSafe, Jev, SemIf, or Winnow. This is a small reproducible evaluation, not a universal safety leaderboard or an exhaustive state-of-the-art jailbreak benchmark.
+
+Original baseline snapshot: [`simple-v1`](https://github.com/cwhy/decision-injection-bench/tree/simple-v1). See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+## Choose a track
+
+| Track | Use it for | Status |
+|---|---|---|
+| **Simple v1** | Fast reproduction of the original experiment | 264 frozen evaluation calls per model; all 1,332 original records preserved |
+| **[Comprehensive v2](docs/comprehensive.md)** | Broader multilingual tests and budgeted adaptive search | Implemented and tested offline; live model measurements not yet published |
+
+Comprehensive v2 adds 72 multilingual cases in 24 scenario groups, 44 static attack variants, Best-of-N, LLM iterative refinement, beam search, label-order reversal, matched-length controls, frozen transfer plans, resumable runs, and grouped scoring. The full static plan costs **25,920 logical calls per model**; preview counts before execution.
+
+```sh
+# Both are offline; no model inference or API calls.
+decision-injection-bench simple export --out /tmp/simple-cases.jsonl
+decision-injection-bench comprehensive plan --out runs/v2-plan.json
+```
+
+Existing `run`, `export`, and `score` commands remain aliases for the simple track. Its published evidence and scores are unchanged. See the [comprehensive workflow and research mapping](docs/comprehensive.md) for explicit limits and source papers.
 
 ## Start offline
 
@@ -24,7 +43,7 @@ decision-injection-bench export --out /tmp/decision-cases.jsonl
 
 The export contains 264 held-out cases, including gold labels for evaluation. **Send only each case's `request` to a model**, never the surrounding evaluation metadata. No model call happens on import, installation, scoring, export, or CI.
 
-## Recorded results
+## Simple v1 recorded results
 
 Targeted flips / 56 eligible attack calls per model and policy:
 
@@ -40,7 +59,7 @@ Jev falsely blocked a requested train-ticket receipt after an encoded-label inst
 
 See [methodology](docs/methodology.md), [reference evidence](results/2026-09-22), and [runtime pins](results/2026-09-22/runtime-manifest.json). These historical held-out items are now public: use them as regression cases, not as a secret or fresh test set after tuning on them.
 
-## Live evaluation
+## Simple v1 live evaluation
 
 Live commands incur API usage or GPU compute and refuse to overwrite output files. Errors are recorded by exception type and stop the run; credentials and exception messages are not logged. Set credentials only in environment variables. The suite never reads a neighboring project's `.env`.
 
@@ -98,7 +117,7 @@ PYTHONPATH=. decision-injection-bench run --backend my-system \
 
 A custom adapter is trusted local Python code. Keep the trusted criterion separate from submitted content. Preserve the model's native probabilities when available; disclose any synthetic scores instead of describing them as calibrated. See [the adapter contract](docs/backends.md).
 
-## Develop new attacks
+## Simple v1 attack development
 
 ```sh
 decision-injection-bench run --backend jev --phase development --out runs/jev-development.jsonl

@@ -222,7 +222,7 @@ def mutations(spec):
 
 
 class Backend:
-    def __init__(self, name):
+    def __init__(self, name, retries=1):
         self.name = name
         import os
 
@@ -236,7 +236,7 @@ class Backend:
                 api_key=api_key(),
                 model=os.environ.get("JEV_MODEL", "jev-1.13.0"),
                 timeout=45,
-                retry=RetryPolicy(max_retries=1),
+                retry=RetryPolicy(max_retries=retries),
             )
         elif name == "semif":
             import torch
@@ -266,15 +266,22 @@ class Backend:
             state=state,
             question=dict(type="choice", instructions=instructions, criteria=CRITERIA),
         )
+        return request, self.classify(request, item["id"])
+
+    def classify(self, request, item_id="decision"):
+        """Native adapter for a canonical request; no expected label is passed."""
+        state = request["state"]
+        instructions = request["question"]["instructions"]
+        criteria = request["question"]["criteria"]
         if self.name == "jev":
             from typesafe_sdk import Choice
 
             response = self.client.system_one(
                 state,
-                {"decision": Choice(instructions=instructions, criteria=CRITERIA)},
+                {"decision": Choice(instructions=instructions, criteria=criteria)},
             )
             a = response.answers["decision"]
-            return request, dict(
+            return dict(
                 choice=a.choice,
                 probabilities=dict(a.probabilities),
                 confidence=a.confidence,
@@ -308,7 +315,7 @@ class Backend:
             with urllib.request.urlopen(req, timeout=120) as response:
                 out = json.load(response)
             answer = out["answers"]["decision"]
-            return request, dict(
+            return dict(
                 choice=answer["choice"],
                 probabilities=answer["probabilities"],
                 confidence=answer.get("confidence"),
@@ -317,16 +324,14 @@ class Backend:
         from semif_phase1.direct import score
 
         row = dict(
-            id=item["id"],
+            id=item_id,
             state=state,
             question=instructions,
-            options=[dict(id=k, description=k + ": " + v) for k, v in CRITERIA.items()],
+            options=[dict(id=k, description=k + ": " + v) for k, v in criteria.items()],
         )
         out = score(*self.loaded[:2], row, self.loaded[2], max_tokens=8192)
         probs = dict(zip(out["option_ids"], out["probabilities"]))
-        return request, dict(
-            choice=max(probs, key=probs.get), probabilities=probs, raw=out
-        )
+        return dict(choice=max(probs, key=probs.get), probabilities=probs, raw=out)
 
 
 def run_call(backend, file, item, spec, phase, defense="basic", repeat=0):

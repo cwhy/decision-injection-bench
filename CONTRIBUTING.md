@@ -14,3 +14,5 @@ For experiment contributions:
 Do not modify the historical `results/2026-09-22` records to improve scores. Add a new dated result directory with its own provenance. Existing public cases are regression tests, not a fresh holdout.
 
 Run `python -m unittest discover -s tests -v` and `python scripts/audit_reference.py` before submitting. CI never calls models or reads API secrets.
+
+For comprehensive v2, keep semantic groups and all their translations within one split. Add offline tests for budget accounting, feedback flow, provenance, and matched-control scoring. Do not describe harness stub results as model measurements.

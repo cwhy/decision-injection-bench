@@ -12,3 +12,5 @@ models/
 *.gguf
 *.safetensors
 .DS_Store
+plans/
+.ruff_cache/
