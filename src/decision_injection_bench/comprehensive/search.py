@@ -343,6 +343,12 @@ def freeze(data, search_dirs, out, top_k=3):
     for folder in search_dirs:
         folder = Path(folder)
         meta = json.loads((folder / "search.json").read_text())
+        if meta["method"] != "bon":
+            raise ValueError(
+                "Generated wrappers require semantic label-preservation review before transfer. "
+                "Automatic freeze currently supports only the authored-wrapper BoN method; "
+                "iterative/beam results are diagnostic, not validated jailbreak rates."
+            )
         complete = json.loads((folder / "complete.json").read_text())
         rows = read_records(folder / "records.jsonl")
         if (

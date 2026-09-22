@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — Live evidence and semantic-validity safeguard
+
+- Publish the first strict-policy comprehensive campaign, including static tests, BoN transfer and diagnostic LLM-driven searches.
+- Live testing found generated wrappers that introduce genuine spam while retaining the original text. Their label changes are not established jailbreaks.
+- Block automatic transfer of unreviewed iterative/beam wrappers, flag raw search scores, and strengthen proposer instructions to preserve classification semantics.
+- Add an offline evidence audit that reproduces every score and frozen selection; preserve the original v0.2.0 execution records and simple-v1 results.
+
 ## 0.2.0 — Comprehensive v2
 
 - Preserve simple v1 commands, frozen cases, and all 1,332 reference records.

@@ -1,0 +1,55 @@
+{
+  "jev": {
+    "requested": "jev-1.13.0",
+    "sdk": "0.6.0"
+  },
+  "semif": {
+    "code_repo": "https://github.com/TheoLeeCJ/SemIf",
+    "code_commit": "1f2dea3e25379f9dfc98cb83c324f00ab5deda37",
+    "model": "Qwen/Qwen3.5-4B",
+    "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+    "backend": "author PyTorch CUDA BF16 direct scorer",
+    "max_tokens": 8192,
+    "difference_from_leaderboard": "RTX 4090 instead of RTX PRO 4500 Blackwell; pinned source and BF16 weights; not a latency reproduction"
+  },
+  "winnow": {
+    "model_repo": "EldanRing/Winnow-12B",
+    "model_revision": "b6ac22b0d51b69b18200acacb3fbdd98073fffe8",
+    "file": "gguf/Winnow-12B-Q8_0.gguf",
+    "sha256": "b710efc4c0d048ee61eed92c5fef5ce323a4d17e7c51f9f0533cc72ae50818ea",
+    "code_repo": "https://github.com/EldanRing/winnow-inference",
+    "code_commit": "6c2b3c04e248a319f2cb43832628eba03e55fe38",
+    "backend": "official llama.cpp CUDA server",
+    "context": 8192,
+    "decision_parallel": 1,
+    "cache": "q8_0",
+    "head": "selected",
+    "reuse_prefix": false,
+    "temperature": 1.0,
+    "difference_from_leaderboard": "RTX 4090 with Q8_0 weights and Q8_0 KV; pinned runtime and context configuration recorded; not a latency reproduction"
+  },
+  "compute": {
+    "location": "user-provided remote Linux server",
+    "gpus": "2 \u00d7 NVIDIA RTX 4090, 24 GB each",
+    "semif_gpu": 0,
+    "winnow_gpu": 1,
+    "software": {
+      "os": "Ubuntu 24.04",
+      "python": "3.12.3",
+      "driver": "590.48.01",
+      "CUDA_compiler": "13.0.88",
+      "torch": "2.10.0",
+      "transformers": "5.17.0",
+      "cmake": "4.4.3"
+    }
+  },
+  "attacker": {
+    "model": "Winnow-12B Q8_0",
+    "endpoint": "remote localhost /v1/chat/completions through SSH tunnel",
+    "same_weights_as_defender": true,
+    "temperature": 0.8,
+    "max_tokens": 2048,
+    "response_format": "json_object",
+    "seed": "not set; generated proposals are archived"
+  }
+}

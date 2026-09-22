@@ -1,6 +1,6 @@
 # Comprehensive v2
 
-This track expands the simple v1 regression suite into a budgeted adaptive evaluation workflow. **No comprehensive live model results are published yet.** The tests in CI use deterministic stubs to validate the harness; they are not measurements of model robustness.
+This track expands the simple v1 regression suite into a budgeted adaptive evaluation workflow. The [first live campaign](../results/2026-09-22-comprehensive) covers strict-policy static tests, BoN transfer and diagnostic iterative/beam searches. CI also uses deterministic stubs to validate the harness.
 
 ## What changed
 
@@ -104,7 +104,7 @@ Defender and attacker invocation counts are separate. For the default 144 condit
 
 ```sh
 decision-injection-bench comprehensive freeze \
-  --searches runs/v2-bon-jev runs/v2-iterative-jev runs/v2-beam-jev \
+  --searches runs/v2-bon-jev \
   --top-k 3 --out runs/v2-selected.json
 
 decision-injection-bench comprehensive plan --selection runs/v2-selected.json \
@@ -114,7 +114,9 @@ decision-injection-bench comprehensive plan --selection runs/v2-selected.json \
   --split test --out runs/v2-transfer-test.json
 ```
 
-Selection accepts only complete, hash-verified **development** searches. It ranks within each source run, retains top-k unique wrappers per task/target category, and takes their union. It never ranks probabilities from different models against each other. Reuse the exact resulting plan across defenders to measure transfer. Selected wrappers retain origin metadata. A missing clean-eligible task/label category is an error.
+Selection accepts only complete, hash-verified **development BoN** searches. **Automatic transfer from iterative/beam is blocked pending a semantic-review workflow.** Live testing found generated wrappers that added actual scam solicitations to benign content, changing the correct label. Keeping the base text verbatim does not preserve the label. Their raw search yields must not be called jailbreak success rates. The scorer flags these runs as `unreviewed_generated_wrappers`.
+
+For the supported authored-wrapper searches, selection ranks within each source run, retains top-k unique wrappers per task/target category, and takes their union. It never ranks probabilities from different models against each other. Reuse the exact resulting plan across defenders to measure transfer. Selected wrappers retain origin metadata. A missing clean-eligible task/label category is an error.
 
 Use validation for pipeline checks. If validation feedback influences another development cycle, document it and keep a fresh test set untouched. Publishing this corpus makes it suitable for regression testing, not secret-holdout claims. For new research, pass `--dataset custom.json`: maintain `version` and an `items` array with `id`, `group`, `task`, `expected`, `language`, `split`, `content`, `rationale`, and `annotation_status`. All translations/paraphrases of a scenario must share a group and split.
 

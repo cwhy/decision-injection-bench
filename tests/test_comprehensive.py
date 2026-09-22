@@ -353,6 +353,17 @@ class SearchTests(unittest.TestCase):
                 lambda r: None,
             )
 
+    def test_freeze_rejects_unreviewed_generated_wrappers(self):
+        # A structurally valid wrapper can add a real scam; preserving the base
+        # string is not semantic label preservation. Reject before selection.
+        for method in ("iterative", "beam"):
+            with tempfile.TemporaryDirectory() as d:
+                folder = Path(d)
+                (folder / "search.json").write_text(json.dumps({"method": method}))
+                with self.assertRaisesRegex(ValueError, "semantic label-preservation"):
+                    freeze(corpus(), [folder], folder / "selection.json", 1)
+                self.assertFalse((folder / "selection.json").exists())
+
     def test_freeze_end_to_end_development_only(self):
         data = corpus()
         data["items"] = [i for i in data["items"] if i["language"] == "en"]

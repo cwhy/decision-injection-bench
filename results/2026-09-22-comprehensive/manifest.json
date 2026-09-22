@@ -1,0 +1,134 @@
+{
+  "recorded_utc": "2026-09-22T09:27:00.335696+00:00",
+  "execution_version": "0.2.0",
+  "analysis_version": "0.2.1",
+  "suite_commit": "1f488399a2abdbdc0a428f4101a1e951bf2b4bd9",
+  "configuration": {
+    "policies": [
+      "strict"
+    ],
+    "orders": [
+      "normal"
+    ],
+    "repeats": 1,
+    "static_attacks_per_item": 44,
+    "languages": [
+      "en",
+      "es",
+      "zh"
+    ],
+    "bon_defender_budget_per_condition": 8,
+    "bon_attack_queries_per_condition": 6
+  },
+  "runs": {
+    "beam-jev": {
+      "kind": "search",
+      "archive": "beam-jev.tar.gz",
+      "sha256": "c504984fae830ae44c80b47321616491f82791af1ccb092d6e84e4cd285431d9",
+      "defender_calls": 144,
+      "terminal_search_yield": {
+        "successes": 6,
+        "eligible_conditions": 24
+      }
+    },
+    "bon-jev": {
+      "kind": "search",
+      "archive": "bon-jev.tar.gz",
+      "sha256": "72869e572ac701043f68da80b6b21497358db7740e0f4ff3db6aafe3f6b12bca",
+      "defender_calls": 192,
+      "terminal_search_yield": {
+        "successes": 0,
+        "eligible_conditions": 24
+      }
+    },
+    "bon-semif": {
+      "kind": "search",
+      "archive": "bon-semif.tar.gz",
+      "sha256": "cdacd5c5a76baf24052cde4b6cb698e8c641bdc1ad63cf98358aaf802ccd948b",
+      "defender_calls": 192,
+      "terminal_search_yield": {
+        "successes": 12,
+        "eligible_conditions": 24
+      }
+    },
+    "bon-winnow": {
+      "kind": "search",
+      "archive": "bon-winnow.tar.gz",
+      "sha256": "6b1041a7d125f3917904691a9b7aac75a02538d13e62bbd59a77294e1dc233a6",
+      "defender_calls": 192,
+      "terminal_search_yield": {
+        "successes": 4,
+        "eligible_conditions": 24
+      }
+    },
+    "iterative-jev": {
+      "kind": "search",
+      "archive": "iterative-jev.tar.gz",
+      "sha256": "ea7a21467cd2023fbd176f689a5a82db3363cdeab4f90c037c2640a5e99299dc",
+      "defender_calls": 143,
+      "terminal_search_yield": {
+        "successes": 7,
+        "eligible_conditions": 24
+      }
+    },
+    "preflight-jev": {
+      "kind": "evaluation",
+      "archive": "preflight-jev.tar.gz",
+      "sha256": "d479f746dad87050f23f19c382cff5e7f4823f668337d619e8ba166d3f59c005",
+      "defender_calls": 48
+    },
+    "preflight-semif": {
+      "kind": "evaluation",
+      "archive": "preflight-semif.tar.gz",
+      "sha256": "1ea71689d30e038675142317e648e460bacd250aca7357889fc538a8b93519fb",
+      "defender_calls": 48
+    },
+    "preflight-winnow": {
+      "kind": "evaluation",
+      "archive": "preflight-winnow.tar.gz",
+      "sha256": "c7f45d891e2c539bd74438709f421764e1bda2a4e542cab54554f2f18d81887a",
+      "defender_calls": 48
+    },
+    "static-jev": {
+      "kind": "evaluation",
+      "archive": "static-jev.tar.gz",
+      "sha256": "e1f61fd0375ad1db318d9c5648c2f84c34d10e8838b48fa441d69c39c128643e",
+      "defender_calls": 2160
+    },
+    "static-semif": {
+      "kind": "evaluation",
+      "archive": "static-semif.tar.gz",
+      "sha256": "263ce9c30320b6489b8e815f11a01777f720532ff3015304dcb2257f8d45de0f",
+      "defender_calls": 2160
+    },
+    "static-winnow": {
+      "kind": "evaluation",
+      "archive": "static-winnow.tar.gz",
+      "sha256": "26827085bbc25b5fd0aa2970a9b22674122549add2eb7771019953b8f31e0b62",
+      "defender_calls": 2160
+    },
+    "transfer-jev": {
+      "kind": "evaluation",
+      "archive": "transfer-jev.tar.gz",
+      "sha256": "39a2ba9dad317cb594e222c4c7b4fb5f798b4f86d0fdfe5d943bbb02aed82c9c",
+      "defender_calls": 192
+    },
+    "transfer-semif": {
+      "kind": "evaluation",
+      "archive": "transfer-semif.tar.gz",
+      "sha256": "4fcecb26eb6b421bfed82304cec1b2faaca720b32d94cfa960646248661e46f5",
+      "defender_calls": 192
+    },
+    "transfer-winnow": {
+      "kind": "evaluation",
+      "archive": "transfer-winnow.tar.gz",
+      "sha256": "1ccac608f4752af5dd173c3e601f504e9c2d7556a2902631d976d527cd3de718",
+      "defender_calls": 192
+    }
+  },
+  "selection_sources": [
+    "bon-jev",
+    "bon-semif",
+    "bon-winnow"
+  ]
+}

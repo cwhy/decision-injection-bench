@@ -13,7 +13,7 @@ Original baseline snapshot: [`simple-v1`](https://github.com/cwhy/decision-injec
 | Track | Use it for | Status |
 |---|---|---|
 | **Simple v1** | Fast reproduction of the original experiment | 264 frozen evaluation calls per model; all 1,332 original records preserved |
-| **[Comprehensive v2](docs/comprehensive.md)** | Broader multilingual tests and budgeted adaptive search | Implemented and tested offline; live model measurements not yet published |
+| **[Comprehensive v2](docs/comprehensive.md)** | Broader multilingual tests and budgeted adaptive search | [First live campaign](results/2026-09-22-comprehensive): strict-policy static tests, BoN transfer, and diagnostic LLM searches |
 
 Comprehensive v2 adds 72 multilingual cases in 24 scenario groups, 44 static attack variants, Best-of-N, LLM iterative refinement, beam search, label-order reversal, matched-length controls, frozen transfer plans, resumable runs, and grouped scoring. The full static plan costs **25,920 logical calls per model**; preview counts before execution.
 
@@ -22,6 +22,8 @@ Comprehensive v2 adds 72 multilingual cases in 24 scenario groups, 44 static att
 decision-injection-bench simple export --out /tmp/simple-cases.jsonl
 decision-injection-bench comprehensive plan --out runs/v2-plan.json
 ```
+
+**Live testing found a validity issue:** generated wrappers can add real spam, making BLOCK the correct answer. Iterative/beam label changes are unvalidated diagnostics; v0.2.1 blocks their automatic transfer until semantic review is supported. The first campaign preserves these attempts and reports the limitation.
 
 Existing `run`, `export`, and `score` commands remain aliases for the simple track. Its published evidence and scores are unchanged. See the [comprehensive workflow and research mapping](docs/comprehensive.md) for explicit limits and source papers.
 

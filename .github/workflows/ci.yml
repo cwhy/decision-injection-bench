@@ -22,3 +22,4 @@ jobs:
       - run: decision-injection-bench comprehensive plan --defenses strict --orders normal --repeats 1 --out /tmp/v2-plan.json
       - run: decision-injection-bench comprehensive search --method beam --backend jev --budget 32 --max-calls 4608 --dry-run --out /tmp/no-live-calls
       - run: python scripts/audit_comprehensive.py
+      - run: python scripts/audit_comprehensive_results.py
