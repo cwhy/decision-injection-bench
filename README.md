@@ -8,12 +8,15 @@ Independent research; not affiliated with TypeSafe, Jev, SemIf, or Winnow. This 
 
 Original baseline snapshot: [`simple-v1`](https://github.com/cwhy/decision-injection-bench/tree/simple-v1). See [CHANGELOG.md](CHANGELOG.md) for version history.
 
+Laya’s **English and multilingual checkpoints** are now supported. The [Laya extension and typed-task pilot](results/2026-09-22-laya-typed) adds 5,100 live calls and tests news topics, emotions, review scores and injection detection through native `choice`, `score` and `noul`. See [setup and methodology](docs/laya-and-typed.md).
+
 ## Choose a track
 
 | Track | Use it for | Status |
 |---|---|---|
 | **Simple v1** | Fast reproduction of the original experiment | 264 frozen evaluation calls per model; all 1,332 original records preserved |
 | **[Comprehensive v2](docs/comprehensive.md)** | Broader multilingual tests and budgeted adaptive search | [First live campaign](results/2026-09-22-comprehensive): strict-policy static tests, BoN transfer, and diagnostic LLM searches |
+| **[Typed pilot](docs/laya-and-typed.md)** | Multiclass, ordinal-score and yes/no detector manipulation | 260 calls per backend; Jev and both Laya checkpoints tested |
 
 Comprehensive v2 adds 72 multilingual cases in 24 scenario groups, 44 static attack variants, Best-of-N, LLM iterative refinement, beam search, label-order reversal, matched-length controls, frozen transfer plans, resumable runs, and grouped scoring. The full static plan costs **25,920 logical calls per model**; preview counts before execution.
 

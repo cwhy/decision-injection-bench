@@ -36,6 +36,10 @@ Download `gguf/Winnow-12B-Q8_0.gguf` from `EldanRing/Winnow-12B`, revision `b6ac
 
 `WINNOW_URL` defaults to `http://127.0.0.1:8091`. Run the harness on the GPU host or use an SSH tunnel to its localhost port; no public server exposure is needed. The native `/v1/systemone` endpoint returns choice probabilities and diagnostics. Temperature is 1.0; prefix reuse is on for held-out requests and off for development/refinement.
 
+## Laya
+
+Native `laya` and `laya-multilingual` adapters use pinned upstream code and weights on a CUDA server. They reject truncated policies, criteria or state; see [Laya setup and typed-task track](laya-and-typed.md). The live comparison uses explicitly expanded token budgets, not silently truncated defaults.
+
 ## Custom adapters
 
 `--adapter module:function` imports a trusted Python callable, invoked as `function(request)`. It receives only the canonical `state` and trusted `question`; no expected label, task ID, attack target or split metadata is passed. Return a dictionary with:

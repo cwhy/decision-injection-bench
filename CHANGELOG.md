@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 — Laya and typed-decision pilot
+
+- Add fixed English and multilingual Laya CUDA adapters with pinned source/weights and explicit no-truncation checks.
+- Add a 260-call English typed track for news topics, emotions, review scores and injection detection, with native choice/score/noul scoring and paired controls.
+- Keep benign injection-detector items as controls only, so new instructions cannot create false attack-success labels.
+- Publish 5,100 live calls, exact execution-source snapshots, baseline errors, matched-control results and reproducible evidence audits.
+- Fix the CLI version string to use the package version.
+
 ## 0.2.1 — Live evidence and semantic-validity safeguard
 
 - Publish the first strict-policy comprehensive campaign, including static tests, BoN transfer and diagnostic LLM-driven searches.

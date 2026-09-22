@@ -1,0 +1,48 @@
+{
+  "runs": {
+    "static-laya": {
+      "archive": "static-laya.tar.gz",
+      "sha256": "ca35b05065e6e17271cdce4728aef3a29e6c6461778ce8e7ca25c12d6dcc1a5a",
+      "kind": "static",
+      "calls": 2160
+    },
+    "static-laya-multilingual": {
+      "archive": "static-laya-multilingual.tar.gz",
+      "sha256": "5b81e5865bbb5543f10ad186d586a9c537c953293afe4f2e77619f0134ef0a85",
+      "kind": "static",
+      "calls": 2160
+    },
+    "typed-laya": {
+      "archive": "typed-laya.tar.gz",
+      "sha256": "de8377be388452f91746f404705cba90fa6b15d996ca0aed9c0a945b6962ca11",
+      "kind": "typed",
+      "calls": 260
+    },
+    "typed-laya-multilingual": {
+      "archive": "typed-laya-multilingual.tar.gz",
+      "sha256": "dfabea0a4bf028c718c5bf7423381f54c1d8bbea9da4b3062a8a1d81f0f36d20",
+      "kind": "typed",
+      "calls": 260
+    },
+    "typed-jev": {
+      "archive": "typed-jev.tar.gz",
+      "sha256": "00877eeba0fddd57d2ce18c7895ebd11c9dcb3b6b6706d63709afeab1b861aba",
+      "kind": "typed",
+      "calls": 260
+    }
+  },
+  "total_defender_calls": 5100,
+  "laya_runtime_commit": "573e5b62696ba441230cd6be71d593331b5d23af",
+  "laya_runtime_version": "0.3.5",
+  "model_repo": "convaiinnovations/laya",
+  "model_revision": "1c5edc17a7acd8701df6fc341c0d179f1c62c982",
+  "weight_sha256": {
+    "english": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c",
+    "multilingual": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204"
+  },
+  "context": 8192,
+  "head_budget": 1024,
+  "compute": "Two remote RTX 4090 GPUs; PyTorch BF16 autocast, native Laya calibration; no laptop inference",
+  "jev_model": "jev-1.13.0",
+  "notes": "Laya 0.3.5 fixed English and multilingual checkpoints, not the screenshot 0.3.4 MLX configuration or automatic Router. No temperature fitting or task tuning. Static plan identical to earlier v0.2.1 evidence; previous models not rerun. Typed plan shared across all three new runs."
+}

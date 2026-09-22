@@ -238,6 +238,10 @@ class Backend:
                 timeout=45,
                 retry=RetryPolicy(max_retries=retries),
             )
+        elif name in ("laya", "laya-multilingual"):
+            from .laya_backend import LayaBackend
+
+            self.laya = LayaBackend(multilingual=name == "laya-multilingual")
         elif name == "semif":
             import torch
 
@@ -270,6 +274,8 @@ class Backend:
 
     def classify(self, request, item_id="decision"):
         """Native adapter for a canonical request; no expected label is passed."""
+        if self.name in ("laya", "laya-multilingual"):
+            return self.laya.classify(request)
         state = request["state"]
         instructions = request["question"]["instructions"]
         criteria = request["question"]["criteria"]

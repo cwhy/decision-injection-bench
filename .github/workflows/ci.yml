@@ -23,3 +23,5 @@ jobs:
       - run: decision-injection-bench comprehensive search --method beam --backend jev --budget 32 --max-calls 4608 --dry-run --out /tmp/no-live-calls
       - run: python scripts/audit_comprehensive.py
       - run: python scripts/audit_comprehensive_results.py
+      - run: decision-injection-bench typed plan --out /tmp/typed-plan.json
+      - run: python scripts/audit_laya_typed.py

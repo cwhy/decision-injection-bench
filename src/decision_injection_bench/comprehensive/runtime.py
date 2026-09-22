@@ -25,7 +25,7 @@ def runtime_identity():
         str(p.relative_to(root)): p.read_text() for p in sorted(root.rglob("*.py"))
     }
     packages = {}
-    for name in ("typesafe-sdk", "torch", "transformers", "semif-phase1"):
+    for name in ("typesafe-sdk", "torch", "transformers", "semif-phase1", "laya"):
         try:
             packages[name] = version(name)
         except PackageNotFoundError:
@@ -100,6 +100,11 @@ def execute_plan(
         if backend == "jev"
         else backend,
         max_calls=max_calls,
+        backend_configuration={
+            k: os.environ[k]
+            for k in ("LAYA_MAX_LEN", "LAYA_HEAD_MAX_LEN")
+            if k in os.environ
+        },
         runtime=runtime_identity(),
     )
     if resume:

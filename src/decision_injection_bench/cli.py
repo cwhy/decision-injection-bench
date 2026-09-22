@@ -166,7 +166,12 @@ def score(rows):
 
 def main():
     import sys
+    from . import __version__
 
+    if len(sys.argv) > 1 and sys.argv[1] == "typed":
+        from .typed import main as typed_main
+
+        return typed_main(sys.argv[2:])
     if len(sys.argv) > 1 and sys.argv[1] == "comprehensive":
         from .comprehensive.cli import main as comprehensive_main
 
@@ -174,9 +179,14 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "simple":
         del sys.argv[1]
     parser = argparse.ArgumentParser(prog="decision-injection-bench")
-    parser.add_argument("--version", action="version", version="%(prog)s 0.2.0")
+    parser.add_argument(
+        "--version", action="version", version="%(prog)s " + __version__
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("simple", help="Original v1 suite (run/export/score)")
+    commands.add_parser(
+        "typed", help="Choice, score and noul task pilot (plan/run/score)"
+    )
     commands.add_parser(
         "comprehensive",
         help="v2 planning, adaptive search, frozen transfer, and scoring",
@@ -185,7 +195,9 @@ def main():
         "run", help="Make live model calls (API usage or GPU compute)"
     )
     run.add_argument(
-        "--backend", required=True, help="jev, semif, winnow, or a name for your plugin"
+        "--backend",
+        required=True,
+        help="jev, semif, winnow, laya, laya-multilingual, or a plugin name",
     )
     run.add_argument(
         "--adapter",
