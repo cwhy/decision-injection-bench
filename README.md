@@ -2,9 +2,9 @@
 
 **Can the text you're classifying tell the classifier what to say?**
 
-Structured decision models — Jev, SemIf, Winnow, Laya — return a label from a schema you define instead of free-form text. That schema guarantee holds: you always get a valid label back. This suite tests what the schema doesn't cover, which is *which* valid label comes back, and whether attacker-controlled content can pick it for you.
+Structured decision models — Jev, SemIf, Winnow, Laya, Kev — return a label from a schema you define instead of free-form text. That schema guarantee holds: you always get a valid label back. This suite tests what the schema doesn't cover, which is *which* valid label comes back, and whether attacker-controlled content can pick it for you.
 
-Independent research. Not affiliated with TypeSafe, Jev, SemIf, Winnow, or Laya.
+Independent research. Not affiliated with TypeSafe, Jev, SemIf, Winnow, Laya, or Kev.
 
 ## What an attack looks like
 
@@ -49,12 +49,19 @@ Please read the right-hand columns before the ranking. Laya's length-matched con
 | Jev 1.13.0 | 15 | 8 | **0** |
 | Winnow-12B Q8 | 48 | 8 | 8 |
 | SemIf · Qwen3.5-4B | 40 | 32 | 32 |
+| Kev-9B | 18 | 16 | 16 |
+| Kev-4B | 16 | 14 | 16 |
+| Kev-0.8B | 28 | 34 | **40** |
 
-Clean and neutral controls were correct for all three models. Writing a stricter policy closed every flip we found on Jev here and did much less for the others — but the larger campaign above still found a way through Jev's strict policy, so this is a real improvement rather than a fix.
+Writing a stricter policy closed every flip we found on Jev here and did much less for the others — and the larger campaign above still found a way through Jev's strict policy, so it is a real improvement rather than a fix.
+
+**It is not a fix that is available to every model.** Across one family, with the same training data and only size changing, the effect of the defense flips sign: Kev-0.8B gets 43% worse under it, Kev-4B is unmoved, Kev-9B improves slightly. The hardening is itself ~565 characters of instruction a model has to be capable enough to use; below that threshold it is more surface, not less. Note also that baseline robustness is *not* monotonic in size — Kev-4B and Kev-9B are effectively tied at the basic policy — so what scales is the ability to act on a defense, not injection resistance itself. Details and caveats: [Kev size sweep](results/2026-09-23-kev).
+
+Kev-4B and SemIf share the same Qwen3.5-4B base and flip 16 vs 40 at the basic policy, which isolates the decision layer from the backbone.
 
 Attacks selected during development transfer less well than the fixed set: Jev 2/72, Winnow 10/72, SemIf 21/72.
 
-**14,495 recorded calls** in total. Every request, response, and score is in [`results/`](results), and `scripts/audit_*.py` reproduces every number offline.
+**16,079 recorded calls** in total. Every request, response, and score is in [`results/`](results), and `scripts/audit_*.py` reproduces every number offline.
 
 ## Try it offline
 
@@ -135,6 +142,20 @@ decision-injection-bench run --backend winnow --phase heldout --out runs/winnow.
 
 # SemIf (one visible CUDA GPU, BF16; refuses CPU and Apple GPU fallback)
 CUDA_VISIBLE_DEVICES=0 decision-injection-bench run --backend semif --phase heldout --out runs/semif.jsonl
+```
+
+Kev runs through the generic adapter rather than a built-in backend. Start its own
+server first — `KEV_MERGE=0` is required for 9B on a 24 GB card, and pinning it
+across every size is what makes the sizes comparable to each other:
+
+```sh
+# in a kev checkout, on the GPU host
+CUDA_VISIBLE_DEVICES=0 KEV_DTYPE=bf16 KEV_MERGE=0 \
+  uv run --extra serve python -m kev.serve --run jaredpalmer/kev-4b --port 8009
+
+# here
+PYTHONPATH=. KEV_URL=http://127.0.0.1:8009 decision-injection-bench run \
+  --backend kev-4b --adapter kev_adapter:classify --phase heldout --out runs/kev-4b.jsonl
 ```
 
 No weights are bundled, and the local backends want a GPU server rather than a laptop. Setup details for each are in [docs/backends.md](docs/backends.md).

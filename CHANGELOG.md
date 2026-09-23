@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 — Kev size sweep and the defense threshold
+
+- Add a Kev adapter (`kev_adapter.py`) for the open Jev-like family on Qwen3.5 bases, using its System One-compatible endpoint and native label probabilities.
+- Publish 1,584 live calls over Kev-0.8B/4B/9B on the frozen simple-v1 held-out plan, plus a calibration A/B and a serving-flag control.
+- Record that the trusted-policy defense flips sign with model size within one family: 0.8B is 43% worse under it, 4B is unmoved, 9B improves slightly. Baseline robustness is not monotonic in size, so what scales is the ability to act on a defense rather than injection resistance.
+- Record that `KEV_MERGE` is not a no-op: merged and unmerged LoRA disagree on 4 of 264 Kev-4B decisions. `KEV_MERGE=0` is pinned across the family, and both sets are published.
+- Note that temperature calibration cannot change a flip, and that confident-wrong rates under attack run several times their reported clean-data value.
+
 ## 0.3.0 — Laya and typed-decision pilot
 
 - Add fixed English and multilingual Laya CUDA adapters with pinned source/weights and explicit no-truncation checks.

@@ -1,0 +1,80 @@
+{
+ "recorded_utc": "2026-09-23",
+ "suite": "simple-v1 held-out plan (frozen selected-attacks.json), 264 calls per configuration",
+ "host": {
+  "gpu": "NVIDIA GeForce RTX 4090 24564 MiB (one GPU per process; CUDA_VISIBLE_DEVICES=1)",
+  "driver": "590.48.01",
+  "cuda": "13.1",
+  "os": "Ubuntu 24.04.3 LTS",
+  "note": "Comparator inference ran on a remote CUDA host, not a laptop."
+ },
+ "serving": {
+  "implementation": "https://github.com/jaredpalmer/kev",
+  "entrypoint": "python -m kev.serve --run <model> --port 8009",
+  "canonical_env": {
+   "KEV_DTYPE": "bf16",
+   "KEV_MERGE": "0",
+   "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "why_no_merge": "kev-9b with the default merged LoRA exceeds 24 GB during .to(cuda) (peak 23.3 GiB, OOM allocating 192 MiB). Unmerged it serves at 16.1 GB. KEV_MERGE=0 is therefore pinned for every size so the family is internally comparable.",
+  "merge_is_not_a_no_op": "Merged and unmerged runs are retained side by side. On kev-4b they disagree on 4 of 264 decisions (max |delta p(ALLOW)| = 0.0249); on kev-0.8b no decision changes (max 0.0346)."
+ },
+ "models": {
+  "kev-0.8b": {
+   "repo": "jaredpalmer/kev-0.8b",
+   "revision": "54f4f8777356cd5bbbb6c6919c657f26e6f2f6d8",
+   "base": "Qwen3.5-0.8B-Base"
+  },
+  "kev-4b": {
+   "repo": "jaredpalmer/kev-4b",
+   "revision": "485ace8703592fcf405488b262449990824cfed1",
+   "base": "Qwen3.5-4B-Base"
+  },
+  "kev-9b": {
+   "repo": "jaredpalmer/kev-9b",
+   "revision": "2629c06a5aeb0feb3b9783bafed17ed8f39ecf5c",
+   "base": "Qwen3.5-9B-Base"
+  }
+ },
+ "calibration_ab": {
+  "default": "checkpoint-stored temperature applied by the pointer head",
+  "raw": "KEV_TEMPERATURE=1.0 set on the server process",
+  "note": "Temperature scaling is monotonic, so flips are identical; only the reported distribution changes."
+ },
+ "not_run": {
+  "kev-9b merged": "does not fit 24 GB",
+  "9b on a second GPU": "kev.serve has no device_map; sharding would require patching the loader and the pointer head"
+ },
+ "files": [
+  {
+   "file": "kev-0.8b-heldout-merged.jsonl",
+   "records": 264,
+   "sha256": "29c824d6cdc9d37b950e165c71c978a7baaa81c448ce4d903cd4a11694df4ad7"
+  },
+  {
+   "file": "kev-0.8b-heldout.jsonl",
+   "records": 264,
+   "sha256": "8980472a494f3408c79d102fdb75ab0c12e47c371f24d36486b205d0d6bc3639"
+  },
+  {
+   "file": "kev-4b-heldout-merged.jsonl",
+   "records": 264,
+   "sha256": "60d9017e9f400b8102e1dfe45cfc813be9ccc7287b00801659a5a7e4af4d9907"
+  },
+  {
+   "file": "kev-4b-heldout-rawlogits.jsonl",
+   "records": 264,
+   "sha256": "6595672f6acb38592c7981cb877147b54f80576c9fae54787baf51f151312306"
+  },
+  {
+   "file": "kev-4b-heldout.jsonl",
+   "records": 264,
+   "sha256": "96c5b0a7cd6e79b5feeb623c56efd0356e3bad7689216d52bb358f1596429202"
+  },
+  {
+   "file": "kev-9b-heldout.jsonl",
+   "records": 264,
+   "sha256": "04fe997ee382a4fcc3aa96099c48bf3ad6795d439703665726dea4004479bcb7"
+  }
+ ]
+}
